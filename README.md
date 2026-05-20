@@ -1,27 +1,27 @@
-Welcome to my portfolio. 
+**Welcome to my portfolio.** 
 
-**PRISCILLAH MIREMBE
-**GIS & Hydrogeology Specialist | Python Geospatial Analyst
+1. **PRISCILLAH MIREMBE** ||
+   _GIS & Hydrogeology Specialist | Python Geospatial Analyst|__|_
 
-Specializing in groundwater analysis, spatial data science, remote sensing, and geospatial automation for water resource management.
+_Specializing in groundwater analysis, spatial data science, remote sensing, and geospatial automation for water resource management._
 
 ---
 
 ## Skills
 
-Hydrogeology
+Hydrogeology;
 • Groundwater exploration
 • Aquifer characterization
 • Hydropower site assessment
 
-GIS & Remote Sensing
+GIS & Remote Sensing;
 • QGIS
 • ArcGIS
 • Spatial analysis
 • Raster & vector processing
 • Remote sensing analysis
 
-Programming & Data Analytics 
+Programming & Data Analytics;
 • Python
 • Pandas
 • Power BI
@@ -29,7 +29,7 @@ Programming & Data Analytics
 • Excel
 • SQL
 
-WASH
+WASH;
 • Water infrastructure mapping
 • Water access analysis
 • Environmental monitoring
@@ -37,10 +37,10 @@ WASH
 ---
 **#projects |**
 1. **Groundwater Modeling & Drawdown Analysis**
-_Overview_
+_Overview_|
 Hydrogeological groundwater modeling and cumulative drawdown assessment for aquifer system analysis.
 
-_Tools_
+_Tools_|
 QGIS | Python | MODFLOW | Spatial Analysis
 ![Figure 2-2 Model Mesh](https://github.com/user-attachments/assets/0322b1b0-77c9-4a55-b6ca-2a0b257f0042)
 ![Figure 2-5 Model Boundary Conditions](https://github.com/user-attachments/assets/1c819547-64a3-4af3-913a-e09b99ff2837)
@@ -48,10 +48,10 @@ QGIS | Python | MODFLOW | Spatial Analysis
 ![Figure 2-70 Maximum Predicted Cumulative Drawdown in Rewan Formation (Layer 4 and 11)](https://github.com/user-attachments/assets/02b5a0ad-f89e-490a-80ba-f50bde5ccb85)
 
 2. **Hydropower GIS Mapping Project**
-_Overview_
+_Overview_|
 Spatial mapping and analysis of small hydropower sites and water infrastructure.
 
-_Tools_
+_Tools_|
 QGIS | Remote Sensing | DEM Analysis
 ![UG map](https://github.com/user-attachments/assets/812aaa55-3a17-4796-bfc2-8bcfe438bbb6)
 ![Figure 2-71 Maximum Predicted Cumulative Drawdown in Leichhardt Seam (Layer 6 and 13)](https://github.com/user-attachments/assets/3e40ce45-5802-4a26-8c8e-4913d8091b27)
@@ -62,20 +62,20 @@ QGIS | Remote Sensing | DEM Analysis
 ![WhatsApp Image 2026-04-11 at 16 56 10 (1)](https://github.com/user-attachments/assets/67410da0-4193-4a1e-b4e3-31b8dda3d6ee)
 
 3. **Water Infrastructure & WASH Dashboards**
-_Overview_
+_Overview_|
 Interactive dashboards and visualization systems for water access and infrastructure monitoring.
 
-_Tools_
+_Tools_|
 Power BI | Excel | Python
 <img width="1682" height="881" alt="image" src="https://github.com/user-attachments/assets/75971447-d02b-43d2-8ea8-3954c1f750a9" />
 <img width="1656" height="942" alt="image" src="https://github.com/user-attachments/assets/55ef4d5d-9ddc-4211-9cc2-6ae0effdec62" />
 <img width="1812" height="932" alt="image" src="https://github.com/user-attachments/assets/a9006e00-12b4-4e33-a2b8-e3ec15fac3a0" />
 
 4. **Geospatial Data Automation**
-_Overview_
+_Overview_|
 Python-based automation workflows for geospatial processing and environmental datasets.
 
-_Tools_
+_Tools_|
 Python | Pandas | GeoPandas
 [Hydro_sync Geospatial Automation App](https://github.com/Mirembe1/tethysapp-Hydro_sync)
 
