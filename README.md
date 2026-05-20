@@ -42,6 +42,7 @@ Hydrogeological groundwater modeling and cumulative drawdown assessment for aqui
 
 _Tools_|
 QGIS • Python • MODFLOW • Spatial Analysis
+
 ![Figure 2-2 Model Mesh](https://github.com/user-attachments/assets/0322b1b0-77c9-4a55-b6ca-2a0b257f0042)
 ![Figure 2-5 Model Boundary Conditions](https://github.com/user-attachments/assets/1c819547-64a3-4af3-913a-e09b99ff2837)
 ![Figure 2-69 Maximum Predicted Cumulative Drawdown in Weathered Permian (Layer 3)](https://github.com/user-attachments/assets/d9749815-3934-4ef1-9d4b-06d5704eb0e3)
@@ -53,6 +54,7 @@ Spatial mapping and analysis of small hydropower sites and water infrastructure.
 
 _Tools_|
 QGIS • Remote Sensing • DEM Analysis
+
 ![UG map](https://github.com/user-attachments/assets/812aaa55-3a17-4796-bfc2-8bcfe438bbb6)
 ![Figure 2-71 Maximum Predicted Cumulative Drawdown in Leichhardt Seam (Layer 6 and 13)](https://github.com/user-attachments/assets/3e40ce45-5802-4a26-8c8e-4913d8091b27)
 ![Mpanga proj 002](https://github.com/user-attachments/assets/2c482792-e0b6-42e1-ba05-9aca6c99d4c8)
@@ -67,6 +69,7 @@ Interactive dashboards and visualization systems for water access and infrastruc
 
 _Tools_|
 Power BI • Excel • Python
+
 <img width="1682" height="881" alt="image" src="https://github.com/user-attachments/assets/75971447-d02b-43d2-8ea8-3954c1f750a9" />
 <img width="1656" height="942" alt="image" src="https://github.com/user-attachments/assets/55ef4d5d-9ddc-4211-9cc2-6ae0effdec62" />
 <img width="1812" height="932" alt="image" src="https://github.com/user-attachments/assets/a9006e00-12b4-4e33-a2b8-e3ec15fac3a0" />
@@ -78,6 +81,12 @@ Python-based automation workflows for geospatial processing and environmental da
 _Tools_|
 Python • Pandas • GeoPandas
 [Hydro_sync Geospatial Automation App](https://github.com/Mirembe1/tethysapp-Hydro_sync)
+
+  **Hydro sync**
+A Field Assistant, digital hydrogeology platform I am developing under the TethysGeoscience Program to improve groundwater data collection, mapping, analysis, and reporting. The platform combines digital field workflows, centralized groundwater records, geospatial mapping, and AI-assisted geological analysis to support hydrogeologists, environmental consultants, and water management institutions
+
+<img width="1895" height="965" alt="image" src="https://github.com/user-attachments/assets/ba0f4cf5-6504-4175-b2f6-8fa734fc90b1" />
+
 
 
 ---
