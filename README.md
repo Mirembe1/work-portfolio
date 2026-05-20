@@ -83,6 +83,6 @@ Python | Pandas | GeoPandas
 ---
 **Contacts:**
 Tel: +256702913028| +256786913028|
-Email: mipriscillah@gmail.com
-www.linkedin.com/in/mirembe-priscillah-a70050258
+Email: mipriscillah@gmail.com |
+LinkedIn: www.linkedin.com/in/mirembe-priscillah-a70050258
 
