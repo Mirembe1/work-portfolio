@@ -1,7 +1,7 @@
 **Welcome to my portfolio.** 
 
-1. **PRISCILLAH MIREMBE** ||
-   _GIS & Hydrogeology Specialist | Python Geospatial Analyst|__|_
+ **PRISCILLAH MIREMBE** ||
+   _GIS & Hydrogeology Specialist | Python Geospatial Analyst||_
 
 _Specializing in groundwater analysis, spatial data science, remote sensing, and geospatial automation for water resource management._
 
