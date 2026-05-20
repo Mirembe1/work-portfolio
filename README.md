@@ -1,7 +1,7 @@
 **Welcome to my portfolio.** 
 
  **PRISCILLAH MIREMBE** ||
-   _Geologist|Environmental & Geospatial Analyst|_
+ __Geologist, Environmental & Geospatial Analyst|__
 
 _Specializing in groundwater analysis, spatial data science, remote sensing, and geospatial automation for water resource management._
 
