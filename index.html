@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mirembe Priscillah — GIS, Remote Sensing & Hydrogeology</title>
+<meta name="description" content="Portfolio of Mirembe Priscillah, a GIS and remote sensing specialist and hydrogeologist in Kampala, Uganda: land-cover change, groundwater modelling, infrastructure and environmental mapping.">
+<meta property="og:title" content="Mirembe Priscillah — GIS, Remote Sensing & Hydrogeology">
+<meta property="og:description" content="Maps and geospatial tools for water, land and infrastructure planning in Uganda.">
+<meta property="og:image" content="https://mirembe1.github.io/work-portfolio/assets/img/lulc_panel.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,500;112,700;112,800&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F5F4;      /* chart paper */
+  --sheet:#FFFFFF;
+  --ink:#12343B;        /* contour ink */
+  --ink-soft:#4A6168;
+  --lake:#1F5FA8;       /* Lake Victoria blue from the LULC legend */
+  --wetland:#5F7F2E;    /* wetland green */
+  --grid:#CBD5D2;       /* graticule */
+  --sand:#E7ECE6;
+  --display:"Archivo", "Arial Narrow", system-ui, sans-serif;
+  --text:"Literata", Georgia, serif;
+  --wrap:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.65 var(--text);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--lake);text-underline-offset:3px;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:3px solid var(--lake);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--display);font-stretch:112%;letter-spacing:-.01em;line-height:1.1;margin:0}
+p{margin:0 0 1em}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:rgba(242,245,244,.92);backdrop-filter:blur(6px);border-bottom:1px solid var(--grid)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.top .name{font:700 16px var(--display);font-stretch:112%;color:var(--ink);text-decoration:none}
+.top nav{display:flex;gap:22px}
+.top nav a{font:500 15px var(--display);color:var(--ink-soft);text-decoration:none}
+.top nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{padding:56px 0 64px;border-bottom:1px solid var(--grid)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:56px;align-items:center}
+.hero h1{font-size:clamp(44px,6.4vw,84px);font-weight:800;line-height:.98;margin-bottom:22px}
+.hero .role{font:600 19px/1.4 var(--display);font-stretch:112%;color:var(--wetland);margin-bottom:20px}
+.hero .lede{font-size:19px;max-width:34em;color:var(--ink)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:6px;font:600 15px var(--display);text-decoration:none;border:1.5px solid var(--ink);color:var(--ink);background:transparent}
+.btn.primary{background:var(--ink);color:#fff}
+.btn:hover{background:var(--ink);color:#fff}
+.btn.primary:hover{background:var(--lake);border-color:var(--lake)}
+.btn svg{width:18px;height:18px}
+
+/* the map viewer: the one bold element */
+.viewer{background:var(--sheet);border:1px solid var(--grid);border-radius:8px;padding:14px 14px 12px;box-shadow:0 1px 0 var(--grid)}
+.viewer .frame{position:relative;aspect-ratio:1094/1549;overflow:hidden;border-radius:4px;background:#fff}
+.viewer .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .45s ease}
+.viewer .frame img.on{opacity:1}
+.years{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:12px}
+.years button{font:700 16px var(--display);font-stretch:112%;padding:9px 0;border-radius:5px;border:1.5px solid var(--grid);background:var(--paper);color:var(--ink-soft);cursor:pointer}
+.years button[aria-pressed="true"]{background:var(--lake);border-color:var(--lake);color:#fff}
+.years button:hover{border-color:var(--lake);color:var(--ink)}
+.viewer figcaption{font-size:14px;color:var(--ink-soft);margin-top:10px;line-height:1.5}
+
+/* sections */
+section{padding:72px 0}
+section + section{border-top:1px solid var(--grid)}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:36px}
+.sec-head h2{font-size:clamp(30px,3.6vw,44px);font-weight:800}
+.sec-head p{max-width:30em;color:var(--ink-soft);margin:0}
+
+/* projects */
+.project{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:40px;padding:36px 0;border-top:1px solid var(--grid)}
+.project:first-of-type{border-top:0;padding-top:0}
+.project.flip{grid-template-columns:minmax(0,1fr) minmax(0,1.35fr)}
+.project.flip .shots{order:2}
+.project h3{font-size:clamp(23px,2.4vw,30px);font-weight:700;margin-bottom:6px}
+.project .where{font:500 15px var(--display);color:var(--wetland);margin-bottom:14px}
+.project .body p{max-width:36em}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 16px;padding:0;list-style:none}
+.tags li{font:500 13px var(--display);padding:4px 10px;border-radius:20px;background:var(--sand);color:var(--ink)}
+.shots{display:grid;gap:8px;grid-template-columns:repeat(var(--cols,2),minmax(0,1fr));align-content:start}
+.shots button{padding:0;border:1px solid var(--grid);background:#fff;border-radius:6px;overflow:hidden;cursor:zoom-in;aspect-ratio:var(--ar,4/3)}
+.shots button img{width:100%;height:100%;object-fit:cover;object-position:top}
+.shots button.contain img{object-fit:contain;background:#fff}
+.shots button.wide{grid-column:1/-1}
+.shots button:hover{border-color:var(--lake)}
+.more{font:600 15px var(--display)}
+
+/* experience: a real sequence, so a timeline */
+.timeline{list-style:none;margin:0;padding:0;border-left:2px solid var(--grid)}
+.timeline li{position:relative;padding:0 0 30px 28px}
+.timeline li::before{content:"";position:absolute;left:-7px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--paper);border:2px solid var(--lake)}
+.timeline .when{font:600 14px var(--display);color:var(--ink-soft)}
+.timeline h3{font-size:20px;font-weight:700;margin:2px 0 4px}
+.timeline .org{font-style:italic;color:var(--ink-soft);margin-bottom:6px}
+.timeline p{max-width:44em;margin:0}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:28px 40px}
+.skills h3{font-size:18px;font-weight:700;margin-bottom:8px;padding-bottom:8px;border-bottom:2px solid var(--wetland)}
+.skills ul{margin:0;padding:0 0 0 18px}
+.skills li{margin:0 0 4px}
+
+.creds{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px 40px}
+.creds h3{font-size:18px;font-weight:700;margin-bottom:10px}
+.creds ul{margin:0;padding-left:18px}
+
+/* contact */
+.contact{background:var(--ink);color:#E9F0EE}
+.contact .sec-head h2{color:#fff}
+.contact .sec-head p{color:#B8C9C5}
+.contact dl{display:grid;grid-template-columns:auto 1fr;gap:10px 24px;margin:0;font-size:18px}
+.contact dt{font:600 15px var(--display);color:#9FC0E6;padding-top:3px}
+.contact dd{margin:0}
+.contact a{color:#fff}
+footer{background:var(--ink);color:#8FA8A3;font-size:14px;padding:0 0 32px}
+
+/* lightbox */
+dialog{border:0;padding:0;background:transparent;max-width:min(96vw,1400px);max-height:94vh}
+dialog::backdrop{background:rgba(10,30,34,.88)}
+.lb{display:flex;flex-direction:column;align-items:center;gap:10px}
+.lb img{max-height:82vh;max-width:min(94vw,1400px);width:auto;background:#fff;border-radius:4px}
+.lb .bar{display:flex;align-items:center;gap:12px;color:#fff;font:500 15px var(--display);width:100%;justify-content:space-between}
+.lb button{font:600 15px var(--display);background:#fff;color:var(--ink);border:0;border-radius:5px;padding:8px 14px;cursor:pointer}
+.lb .cap{flex:1;text-align:center;font-family:var(--text)}
+
+.img-missing{display:flex;align-items:center;justify-content:center;height:100%;padding:12px;text-align:center;font-size:14px;color:var(--ink-soft);background:var(--sand)}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;gap:36px}
+  .viewer{max-width:520px}
+  .project,.project.flip{grid-template-columns:1fr;gap:20px}
+  .project.flip .shots{order:0}
+  .sec-head{flex-direction:column;align-items:start}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  .top nav{gap:14px}
+  .top nav a:nth-child(3){display:none}
+  section{padding:52px 0}
+  .contact dl{grid-template-columns:1fr;gap:2px}
+  .contact dd{margin-bottom:12px}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="name" href="#">Mirembe Priscillah</a>
+    <nav aria-label="Sections">
+      <a href="#work">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap">
+    <div>
+      <h1 id="hero-title">Mirembe Priscillah</h1>
+      <p class="role">GIS &amp; remote sensing specialist, hydrogeologist and geospatial developer in Kampala, Uganda</p>
+      <p class="lede">I turn field measurements, satellite imagery and project registers into maps and tools that engineers, planners and communities can act on, from groundwater models and borehole siting to land-cover change across Kampala.</p>
+      <div class="actions">
+        <a class="btn primary" href="mailto:mipriscillah@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+          Email me</a>
+        <a class="btn" href="#work">See the maps</a>
+        <a class="btn" href="https://www.linkedin.com/in/mirembe-priscillah-a70050258">LinkedIn</a>
+        <a class="btn" href="https://github.com/Mirembe1">GitHub</a>
+      </div>
+    </div>
+
+    <figure class="viewer" aria-label="Kampala District land cover map viewer">
+      <div class="frame" id="frame">
+        <img src="assets/img/lulc_2005.jpg" alt="Kampala District land use and land cover, 2005" class="on" data-year="2005">
+        <img src="assets/img/lulc_2015.jpg" alt="Kampala District land use and land cover, 2015" data-year="2015" loading="lazy">
+        <img src="assets/img/lulc_2020.jpg" alt="Kampala District land use and land cover, 2020" data-year="2020" loading="lazy">
+        <img src="assets/img/lulc_2026.jpg" alt="Kampala District land use and land cover, 2026" data-year="2026" loading="lazy">
+      </div>
+      <div class="years" role="group" aria-label="Choose a year">
+        <button type="button" aria-pressed="true" data-year="2005">2005</button>
+        <button type="button" aria-pressed="false" data-year="2015">2015</button>
+        <button type="button" aria-pressed="false" data-year="2020">2020</button>
+        <button type="button" aria-pressed="false" data-year="2026">2026</button>
+      </div>
+      <figcaption>Kampala District land cover from Landsat and Sentinel-2 imagery. Pick a year to watch built-up land (grey) replace grassland, trees and wetland.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="work" aria-labelledby="work-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="work-title">Projects</h2>
+      <p>Select any map to open it full size.</p>
+    </div>
+
+    <article class="project">
+      <div class="shots" style="--cols:4;--ar:1094/1549">
+        <button class="contain" data-gallery="lulc" data-src="assets/img/lulc_2005.jpg" data-cap="Kampala land cover, 2005"><img src="assets/img/lulc_2005.jpg" alt="Kampala land cover 2005" loading="lazy"></button>
+        <button class="contain" data-gallery="lulc" data-src="assets/img/lulc_2015.jpg" data-cap="Kampala land cover, 2015 (Landsat 8)"><img src="assets/img/lulc_2015.jpg" alt="Kampala land cover 2015" loading="lazy"></button>
+        <button class="contain" data-gallery="lulc" data-src="assets/img/lulc_2020.jpg" data-cap="Kampala land cover, 2020 (Sentinel-2)"><img src="assets/img/lulc_2020.jpg" alt="Kampala land cover 2020" loading="lazy"></button>
+        <button class="contain" data-gallery="lulc" data-src="assets/img/lulc_2026.jpg" data-cap="Kampala land cover, 2026 (Sentinel-2)"><img src="assets/img/lulc_2026.jpg" alt="Kampala land cover 2026" loading="lazy"></button>
+      </div>
+      <div class="body">
+        <h3>Land cover change in Kampala, 2005–2026</h3>
+        <div class="where">Kampala District, 2026</div>
+        <p>Four epochs of satellite imagery classified into lake, urban areas, wetlands, tree–grass mixture and urban grassland. I segmented each scene with mean-shift segmentation, classified the segments with a support vector machine, and checked each map against independent reference points (overall accuracy 72–88 %, kappa 0.63–0.83).</p>
+        <ul class="tags"><li>ArcGIS Pro</li><li>Landsat 8</li><li>Sentinel-2</li><li>Object-based classification</li><li>Accuracy assessment</li></ul>
+        <a class="more" href="https://github.com/Mirembe1/work-portfolio/tree/main/projects/kampala-lulc">Read the method and accuracy tables</a>
+      </div>
+    </article>
+
+    <article class="project flip">
+      <div class="shots" style="--cols:1;--ar:16/8.6">
+        <button data-gallery="hydro" data-src="https://github.com/user-attachments/assets/ba0f4cf5-6504-4175-b2f6-8fa734fc90b1" data-cap="HYDRO_SYNC: map view with navigation for field forms, VES and resistivity surveys"><img src="https://github.com/user-attachments/assets/ba0f4cf5-6504-4175-b2f6-8fa734fc90b1" alt="HYDRO_SYNC web application map view" loading="lazy"></button>
+      </div>
+      <div class="body">
+        <h3>HYDRO_SYNC: digital field data for hydrogeology</h3>
+        <div class="where">Tethys Geoscience Mentorship Program, 2026</div>
+        <p>An open-source web platform that replaces paper field sheets for groundwater work. Field teams record VES and resistivity surveys and site data on digital forms with GPS capture; records sync to a central groundwater database and appear on a live map for analysis and reporting.</p>
+        <ul class="tags"><li>Python</li><li>Tethys Platform</li><li>Web mapping</li><li>GPS capture</li></ul>
+        <a class="more" href="https://github.com/Mirembe1/tethysapp-Hydro_sync">View the code on GitHub</a>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="shots" style="--cols:3;--ar:3/4">
+        <button class="contain" data-gallery="kiry" data-src="https://github.com/user-attachments/assets/bfbd4b76-cc97-42d2-a444-466af4c545cb" data-cap="Kiryandongo District: (a) lithology, (b) topographic map-sheet index"><img src="https://github.com/user-attachments/assets/bfbd4b76-cc97-42d2-a444-466af4c545cb" alt="Kiryandongo lithology map" loading="lazy"></button>
+        <button class="contain" data-gallery="kiry" data-src="https://github.com/user-attachments/assets/b8cf42f5-0b39-403a-801e-055e61b35cf5" data-cap="Kiryandongo District: (a) land use, (b) elevation"><img src="https://github.com/user-attachments/assets/b8cf42f5-0b39-403a-801e-055e61b35cf5" alt="Kiryandongo land use and elevation maps" loading="lazy"></button>
+        <button class="contain" data-gallery="kiry" data-src="https://github.com/user-attachments/assets/67410da0-4193-4a1e-b4e3-31b8dda3d6ee" data-cap="Kiryandongo District: (a) mean annual rainfall, (b) soil types"><img src="https://github.com/user-attachments/assets/67410da0-4193-4a1e-b4e3-31b8dda3d6ee" alt="Kiryandongo rainfall and soil maps" loading="lazy"></button>
+      </div>
+      <div class="body">
+        <h3>Baseline maps for a small hydropower site</h3>
+        <div class="where">Kiryandongo District, Uganda</div>
+        <p>A consistent set of paired baseline maps for the project area and its surroundings: lithology, map-sheet index, land use, elevation, mean annual rainfall and soils, all on one layout so engineers and environmental assessors can compare them side by side.</p>
+        <ul class="tags"><li>QGIS</li><li>DEM analysis</li><li>Geology</li><li>Cartography</li></ul>
+      </div>
+    </article>
+
+    <article class="project flip">
+      <div class="shots" style="--cols:3;--ar:3/4">
+        <button class="contain wide" style="aspect-ratio:3507/2480" data-gallery="gw" data-src="https://github.com/user-attachments/assets/0322b1b0-77c9-4a55-b6ca-2a0b257f0042" data-cap="Simple and complex model mesh"><img src="https://github.com/user-attachments/assets/0322b1b0-77c9-4a55-b6ca-2a0b257f0042" alt="Groundwater model mesh maps" loading="lazy"></button>
+        <button class="contain" data-gallery="gw" data-src="https://github.com/user-attachments/assets/1c819547-64a3-4af3-913a-e09b99ff2837" data-cap="Model boundary conditions"><img src="https://github.com/user-attachments/assets/1c819547-64a3-4af3-913a-e09b99ff2837" alt="Model boundary conditions map" loading="lazy"></button>
+        <button class="contain" data-gallery="gw" data-src="https://github.com/user-attachments/assets/d9749815-3934-4ef1-9d4b-06d5704eb0e3" data-cap="Maximum predicted cumulative drawdown, weathered Permian (layer 3)"><img src="https://github.com/user-attachments/assets/d9749815-3934-4ef1-9d4b-06d5704eb0e3" alt="Drawdown map, weathered Permian" loading="lazy"></button>
+        <button class="contain" data-gallery="gw" data-src="https://github.com/user-attachments/assets/02b5a0ad-f89e-490a-80ba-f50bde5ccb85" data-cap="Maximum predicted cumulative drawdown, Rewan Formation (layers 4 and 11)"><img src="https://github.com/user-attachments/assets/02b5a0ad-f89e-490a-80ba-f50bde5ccb85" alt="Drawdown map, Rewan Formation" loading="lazy"></button>
+        <button class="contain" data-gallery="gw" data-src="https://github.com/user-attachments/assets/3e40ce45-5802-4a26-8c8e-4913d8091b27" data-cap="Maximum predicted cumulative drawdown, Leichhardt Seam (layers 6 and 13)"><img src="https://github.com/user-attachments/assets/3e40ce45-5802-4a26-8c8e-4913d8091b27" alt="Drawdown map, Leichhardt Seam" loading="lazy"></button>
+      </div>
+      <div class="body">
+        <h3>Groundwater model and drawdown mapping</h3>
+        <div class="where">Isaac Plains &amp; Isaac Downs, Queensland, Australia</div>
+        <p>Map figures for a multi-layer groundwater model around open-cut mining: model mesh, boundary conditions and maximum predicted cumulative drawdown in each hydrostratigraphic unit, with faults, mine pits and watercourses for context.</p>
+        <ul class="tags"><li>MODFLOW</li><li>QGIS</li><li>Groundwater modelling</li><li>Hydrostratigraphy</li></ul>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="shots" style="--cols:2;--ar:4/3">
+        <button class="contain" data-gallery="infra" data-src="https://github.com/user-attachments/assets/2c482792-e0b6-42e1-ba05-9aca6c99d4c8" data-cap="Busega–Mpigi Expressway: stone quarries, dumpsites and borrow pits"><img src="https://github.com/user-attachments/assets/2c482792-e0b6-42e1-ba05-9aca6c99d4c8" alt="Busega–Mpigi Expressway support facilities map" loading="lazy"></button>
+        <button class="contain" data-gallery="infra" data-src="https://github.com/user-attachments/assets/216511ab-b3f5-4db3-ab6d-d1bb03f9d775" data-cap="PM2.5 concentration surface, Koome Island, Mukono District"><img src="https://github.com/user-attachments/assets/216511ab-b3f5-4db3-ab6d-d1bb03f9d775" alt="PM2.5 air quality map of Koome Island" loading="lazy"></button>
+        <button class="contain wide" style="aspect-ratio:16/10" data-gallery="infra" data-src="https://github.com/user-attachments/assets/812aaa55-3a17-4796-bfc2-8bcfe438bbb6" data-cap="Field data collection points across eastern Uganda"><img src="https://github.com/user-attachments/assets/812aaa55-3a17-4796-bfc2-8bcfe438bbb6" alt="Map of data collection points in Uganda" loading="lazy"></button>
+      </div>
+      <div class="body">
+        <h3>Infrastructure and environmental field mapping</h3>
+        <div class="where">Mpigi, Wakiso and Mukono districts, Uganda</div>
+        <p>Maps built from GPS field coordinates: the stone quarries, dumpsites and borrow pits supporting the Busega–Mpigi Expressway; an interpolated PM2.5 air-quality surface from monitoring points on Koome Island; and survey locations across eastern Uganda.</p>
+        <ul class="tags"><li>GPS data</li><li>Interpolation</li><li>Environmental monitoring</li><li>Infrastructure</li></ul>
+      </div>
+    </article>
+
+    <article class="project flip">
+      <div class="shots" style="--cols:2;--ar:16/9">
+        <button class="wide" data-gallery="headrace" data-src="https://github.com/user-attachments/assets/75971447-d02b-43d2-8ea8-3954c1f750a9" data-cap="Headrace Design Tool dashboard"><img src="https://github.com/user-attachments/assets/75971447-d02b-43d2-8ea8-3954c1f750a9" alt="Headrace Design Tool dashboard" loading="lazy"></button>
+        <button data-gallery="headrace" data-src="https://github.com/user-attachments/assets/55ef4d5d-9ddc-4211-9cc2-6ae0effdec62" data-cap="Head and loss breakdown, annual energy generation"><img src="https://github.com/user-attachments/assets/55ef4d5d-9ddc-4211-9cc2-6ae0effdec62" alt="Head and loss breakdown charts" loading="lazy"></button>
+        <button data-gallery="headrace" data-src="https://github.com/user-attachments/assets/a9006e00-12b4-4e33-a2b8-e3ec15fac3a0" data-cap="Built-in user guide"><img src="https://github.com/user-attachments/assets/a9006e00-12b4-4e33-a2b8-e3ec15fac3a0" alt="Headrace Design Tool user guide" loading="lazy"></button>
+      </div>
+      <div class="body">
+        <h3>Headrace design tool for small hydropower</h3>
+        <div class="where">Excel dashboard</div>
+        <p>A spreadsheet tool that sizes a headrace pipe or channel and reports friction and minor losses, net head, power and annual energy at different turbine efficiencies. Inputs, automatic calculations and outputs are colour-coded, and a built-in guide explains every field.</p>
+        <ul class="tags"><li>Excel</li><li>Hydraulics</li><li>Dashboards</li><li>Hydropower</li></ul>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="experience" aria-labelledby="exp-title">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="exp-title">Experience</h2></div>
+    <ol class="timeline">
+      <li>
+        <div class="when">Jan 2026 – Jun 2026</div>
+        <h3>Geoscience Developer (mentee)</h3>
+        <div class="org">Tethys Geoscience Foundation Mentorship Program</div>
+        <p>Designed and built HYDRO_SYNC, and deployed geospatial web applications on open-source servers alongside an international developer community.</p>
+      </li>
+      <li>
+        <div class="when">Jan 2026 – May 2026</div>
+        <h3>Freelance GIS Specialist</h3>
+        <div class="org">Nexus</div>
+        <p>Updated groundwater models and geospatial datasets for infrastructure planning and produced maps and spatial analyses.</p>
+      </li>
+      <li>
+        <div class="when">Mar 2025 – Jun 2025</div>
+        <h3>Research Assistant, GIS &amp; Data Analysis</h3>
+        <div class="org">Kampala Population Equivalent Project, Makerere University and Eawag</div>
+        <p>Cleaned, validated and analysed large urban sanitation datasets to estimate population equivalents for non-sewered cities, and produced maps, dashboards and automated Python/Excel workflows.</p>
+      </li>
+      <li>
+        <div class="when">Jun 2023 – Dec 2024</div>
+        <h3>Junior Hydrogeologist &amp; Administrator</h3>
+        <div class="org">Aquatech Enterprises (U) Ltd</div>
+        <p>Hydrogeological investigations and borehole siting; groundwater quality testing against WHO and national standards; safe yield, recharge and drawdown analysis with MODFLOW; maps and reports in QGIS.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="skills" aria-labelledby="skills-title">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="skills-title">Skills</h2></div>
+    <div class="skills">
+      <div><h3>GIS &amp; cartography</h3><ul><li>QGIS (advanced), ArcGIS Pro</li><li>Spatial analysis and data validation</li><li>Map series and print layouts</li><li>Power BI dashboards</li></ul></div>
+      <div><h3>Remote sensing</h3><ul><li>Landsat and Sentinel-2 processing</li><li>Object-based classification (segmentation + SVM)</li><li>Accuracy assessment</li><li>Google Earth Engine</li></ul></div>
+      <div><h3>Hydrogeology</h3><ul><li>Borehole siting and hydrogeological mapping</li><li>Groundwater modelling (MODFLOW)</li><li>Pumping-test analysis (Aquitest)</li><li>Water-quality assessment</li></ul></div>
+      <div><h3>Data &amp; development</h3><ul><li>Python (Pandas, GeoPandas)</li><li>SQL, GeoJSON, Excel (advanced)</li><li>Tethys Platform web apps</li><li>Git and GitHub</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="edu-title">
+  <div class="wrap">
+    <div class="sec-head"><h2 id="edu-title">Education &amp; training</h2></div>
+    <div class="creds">
+      <div><h3>Education</h3><ul><li>MSc Geology, Makerere University (in progress)</li><li>BSc Physical Sciences (Geology &amp; Physics), Makerere University, 2023</li></ul></div>
+      <div><h3>Training</h3><ul><li>Tethys Geoscience Foundation Mentorship Program, 2026</li><li>Basic Python Workshop, Arizona State University, 2025</li><li>NASA ARSET applied remote sensing training, 2024</li></ul></div>
+      <div><h3>Memberships</h3><ul><li>World Youth Parliament for Water</li><li>Tethys Geoscience Community</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact" aria-labelledby="contact-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 id="contact-title">Contact</h2>
+      <p>Open to GIS, remote sensing and hydrogeology work in Uganda and remotely.</p>
+    </div>
+    <dl>
+      <dt>Email</dt><dd><a href="mailto:mipriscillah@gmail.com">mipriscillah@gmail.com</a></dd>
+      <dt>Phone</dt><dd><a href="tel:+256702913028">+256 702 913 028</a></dd>
+      <dt>LinkedIn</dt><dd><a href="https://www.linkedin.com/in/mirembe-priscillah-a70050258">mirembe-priscillah</a></dd>
+      <dt>GitHub</dt><dd><a href="https://github.com/Mirembe1">github.com/Mirembe1</a></dd>
+    </dl>
+  </div>
+</section>
+</main>
+<footer><div class="wrap">© 2026 Mirembe Priscillah, Kampala, Uganda</div></footer>
+
+<dialog id="lb" aria-label="Map viewer">
+  <div class="lb">
+    <img id="lb-img" alt="">
+    <div class="bar">
+      <button type="button" id="lb-prev">Previous</button>
+      <span class="cap" id="lb-cap"></span>
+      <button type="button" id="lb-next">Next</button>
+      <button type="button" id="lb-close">Close</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+// Year switcher
+(function(){
+  const imgs=[...document.querySelectorAll('#frame img')];
+  const btns=[...document.querySelectorAll('.years button')];
+  btns.forEach(b=>b.addEventListener('click',()=>{
+    const y=b.dataset.year;
+    imgs.forEach(i=>i.classList.toggle('on',i.dataset.year===y));
+    btns.forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));
+  }));
+})();
+
+// Lightbox gallery
+(function(){
+  const dlg=document.getElementById('lb'), img=document.getElementById('lb-img'), cap=document.getElementById('lb-cap');
+  let set=[], idx=0;
+  function show(i){ idx=(i+set.length)%set.length; const b=set[idx]; img.src=b.dataset.src; img.alt=b.dataset.cap; cap.textContent=b.dataset.cap+(set.length>1?`  (${idx+1} of ${set.length})`:'');
+    document.getElementById('lb-prev').hidden=document.getElementById('lb-next').hidden=set.length<2; }
+  document.querySelectorAll('.shots button').forEach(b=>b.addEventListener('click',()=>{
+    set=[...document.querySelectorAll(`.shots button[data-gallery="${b.dataset.gallery}"]`)]; show(set.indexOf(b));
+    if(dlg.showModal) dlg.showModal(); else window.open(b.dataset.src);
+  }));
+  document.getElementById('lb-prev').onclick=()=>show(idx-1);
+  document.getElementById('lb-next').onclick=()=>show(idx+1);
+  document.getElementById('lb-close').onclick=()=>dlg.close();
+  dlg.addEventListener('click',e=>{ if(e.target===dlg) dlg.close(); });
+  dlg.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft') show(idx-1); if(e.key==='ArrowRight') show(idx+1); });
+})();
+
+// If an externally hosted image fails, say where to find it instead of showing a broken icon
+document.querySelectorAll('.shots img').forEach(i=>i.addEventListener('error',()=>{
+  const d=document.createElement('div'); d.className='img-missing'; d.textContent='Image could not load here. View it in the GitHub repository.'; i.replaceWith(d);
+}));
+</script>
+</body>
+</html>
