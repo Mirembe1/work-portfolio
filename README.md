@@ -89,6 +89,17 @@ A Field Assistant, digital hydrogeology platform I am developing under the Tethy
 
 
 
+5. **Land Use / Land Cover Change — Kampala District (2005–2026)**
+_Overview_|
+Object-based LULC classification of Kampala for 2005, 2015, 2020 and 2026 from Landsat 8 and Sentinel-2 imagery, mapping urban expansion into grassland, tree and wetland cover, with confusion-matrix accuracy assessment (overall accuracy 72–88 %, kappa 0.63–0.83).
+
+_Tools_|
+ArcGIS Pro • Mean-shift segmentation • SVM classification • Landsat 8 • Sentinel-2 • Accuracy assessment
+
+![Kampala LULC 2005–2026](projects/kampala-lulc/kampala_lulc_2005-2026_panel.jpg)
+
+➡️ [Full project write-up, maps and accuracy tables](projects/kampala-lulc/)
+
 ---
 **Contacts:**
 Tel: +256702913028| +256786913028|

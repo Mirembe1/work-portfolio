@@ -1,0 +1,5 @@
+year,imagery,reference_points,overall_accuracy_pct,kappa
+2005,2005 multispectral image,36,72.2,0.634
+2015,Landsat 8 OLI Level-2 (27 Feb 2015),41,87.8,0.830
+2020,Sentinel-2A Level-2A (9 Feb 2020),38,81.6,0.739
+2026,Sentinel-2A Level-2A (28 Aug 2026),41,82.9,0.755
